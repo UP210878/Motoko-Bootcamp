@@ -1,39 +1,40 @@
+// OBJETOS, LLAMADOS RECORDS EN MOTOKO
+import Text "mo:base/Text";
+import HashMap "mo:base/HashMap";
+
 actor {
-  //  VARIABLES No mutable con let(CONSTANTES), mutables con var(VARIABLES)
-  // := para asignar iguales
-  // Se puede asignar tamaños de variables como Nat8 o Nat16 para terminos de optimizacion
+    // TIPOS, NO SON INTERFACES NI CONSTRUCTORES. PARA MANTENER CONSISTENCIA
+    type Person = {
+        name: Text;
+        age: Nat;
+    };
+
+    // RECORD
+    let vicente: Person = {
+        name = "Vicente";
+        age = 22;
+    };
+
+    let cocker: Person = {
+        name = "Cocker";
+        age = 54;
+    };
 
 
-  let age : Nat = 0; // Los tipos siempre deben estar adentro al iniciar las variables
-  var testBool : Bool = true;
-  var myInt: Int = 0;
-  var myFloat : Float = 0.0;
-  var name: Text = "John Doe";
-  //  QUERY --> Lectura -> milisegundos
-  //  UPDATE --> Escritura -> 2-3 segundos
-  
-  //QUERY
-  // public query func greet() : async Text {
-  //   return "Hello World";
-  // };
+    let persons = HashMap.HashMap<Text, Person>(5, Text.equal, Text.hash); //El 5 es la memoria a posicionar, se puede hasta tener 256
+    persons.put("cocker",cocker);
+    persons.put("vicente",vicente);
 
-  //  ESTRUCTURA DE OPERACIONES
-  //  public [query] func NOMBRE(PARAMETROS) : async TIPO_A_RETORNAR {
-  //  return CosaARetornar;
-  //  }
+    public query func getPerson(name: Text): async ?Person {
+        return persons.get(name);
+    };
 
-  // SETNAME
-  public func setName( nameInput : Text) : async () {
-    name := nameInput;
-  };
-  // GETNAME
-  public query func getName() : async Text {
-    return name;
-  };
-};
+    public func setPerson(index: Text, name: Text, age: Nat): async () {
+        let newPerson: Person = {
+            name = name;
+            age = age;
+        };
 
-// actor {
-//   public query func greet(name : Text) : async Text {
-//     return "Hello, " # name # "!";
-//   };
-// };
+        persons.put(index, newPerson)
+    };
+}

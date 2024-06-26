@@ -1,7 +1,7 @@
 {
   "canisters": {
     "backend": {
-      "main": "src/hello_world_backend/main.mo",
+      "main": "src/hello_world_backend/actividadEstudiantes.mo",
       "type": "motoko"
     }
   },
