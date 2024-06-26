@@ -1,6 +1,6 @@
 {
   "canisters": {
-    "hello_world_backend": {
+    "backend": {
       "main": "src/hello_world_backend/main.mo",
       "type": "motoko"
     }
